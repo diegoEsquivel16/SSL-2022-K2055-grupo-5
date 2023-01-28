@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     strcpy(operation, inputs[2]);
     int operationResult = resolveOperation(operation);
 
+    printf("punto 3 resultado %d \n", operationResult);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
