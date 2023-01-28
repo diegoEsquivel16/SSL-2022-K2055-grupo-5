@@ -7,6 +7,8 @@
 #include "IntToCharHelper.h"
 #include "Stack.h"
 
+//Algoritmo para 
+
 //Defino si un caracter es un operador
 bool isOperator (char operator) {
     return  operator == '+' || operator == '-' || operator == '*';
@@ -78,19 +80,29 @@ int resolveOperation(char *operation) {
     while (nextToken != '\0' && nextToken != '\n') {        
         //Pregunto si el token leido es un digito
         if (nextToken >= '0' && nextToken <= '9') {
+            //Si el caracter anterior fue un digito, entonces tengo que concatenarlo con el caracter que lei ahora, para obtener el numero real
             if (previousTokenWasADigit){
+                //Saco el digito anterior
                 int previousDigit = pop(valuesStack);
                 char previousCharDigit [sizeof(int)*8+1];
+                //Lo convierto a char nuevamente
                 itoa(previousDigit, previousCharDigit, 10);
                 char* newCharDigit;
+                //Inicializo una variable char nueva para guardar el nuevo digito con el valor anterior mas el nuevo
                 newCharDigit = malloc(strlen(previousCharDigit)+2);
+                //Copio el valor anterior al auxiliar newCharDigit
                 strcpy(newCharDigit, previousCharDigit);
+                //Y le concateno el digito que le falta
                 strcat(newCharDigit, &nextToken);
+                //Lo convierto todo a int nuevamente
                 int value = convertToInt(newCharDigit);
+                //Y lo guardo en la pila de valores
                 push(valuesStack, value);
                 free(newCharDigit);
             } else {
+                //Convierto el caracter en un digito
                 int value = convertToInt(&nextToken);
+                //Y lo guardo en la pila de valores
                 push(valuesStack, value);
                 //Como el caracter fue un digito debo setear este flag en true para la siguiente iteracion
                 previousTokenWasADigit = true;
